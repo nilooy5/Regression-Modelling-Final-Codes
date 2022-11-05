@@ -61,21 +61,8 @@ gamma_fit2 <- glm(Bonus ~ perd + Claims + Insured, data = dataMoto, family = Gam
 gamma_fit2
 
 # chi square test of gamma_fit2 and gamma_fit
-anov <- anova(gamma_fit2, gamma_fit)
-# get the p value
-anov
+anovTest <- anova(gamma_fit2, gamma_fit)
 
-# get the fitted values
-gamma_pred <- fitted(gamma_fit)
-gamma_pred
-# get the residuals
-gamma_res <- residuals(gamma_fit)
-gamma_res
-# get the r squared value for the fitted model in the test set
-caret::R2(dataMoto$Bonus, gamma_pred)
-# get the RMSE value for the fitted model in the test set
-RMSE(dataMoto$Bonus, gamma_pred)
-# get the MAE value for the fitted model in the test set
-MAE(dataMoto$Bonus, gamma_pred)
+anovTest
 
 # Q: 10
