@@ -1,4 +1,9 @@
 library(caret)
+library(faraway)
+# install package faraway
+# library(faraway)
+install.packages("faraway")
+library(faraway)
 
 # Q: 7
 
@@ -32,3 +37,45 @@ RMSE(y_test, ridge_pred)
 # get the r squared value for the fitted model in the test set
 caret::R2(y_test, ridge_pred)
 ridge_pred
+# sum of residuals of y_test and ridge_pred
+y_test - ridge_pred
+sum(y_test - ridge_pred)
+dataMoto <- motorins
+
+# Q: 9
+
+# fit a gamma glm with mu_i as perd_i by Bonus_i
+gamma_fit <- glm(Bonus ~ perd, data = dataMoto, family = Gamma(link = "identity"), subset = 1:35)
+gamma_fit
+# get fitted_log_mu_i
+fitted(gamma_fit)
+# get fitted_mu_i
+exp(fitted(gamma_fit))
+# get fitted values
+# fit a gamma glm with mu_i as mean of perd_i by Bonus_i, Claims_i and Insured_i
+# gamma_fit2 <- glm(Bonus ~ perd + Claims + Insured, data = dataMoto, family = Gamma(link = "identity"))
+# gamma_fit2
+
+# fit a gamma glm with mu_i as mean of perd_i by Bonus_i, Claims_i and Insured_i i = 1...35
+gamma_fit2 <- glm(Bonus ~ perd + Claims + Insured, data = dataMoto, family = Gamma(link = "identity"), subset = 1:35)
+gamma_fit2
+
+# chi square test of gamma_fit2 and gamma_fit
+anov <- anova(gamma_fit2, gamma_fit)
+# get the p value
+anov
+
+# get the fitted values
+gamma_pred <- fitted(gamma_fit)
+gamma_pred
+# get the residuals
+gamma_res <- residuals(gamma_fit)
+gamma_res
+# get the r squared value for the fitted model in the test set
+caret::R2(dataMoto$Bonus, gamma_pred)
+# get the RMSE value for the fitted model in the test set
+RMSE(dataMoto$Bonus, gamma_pred)
+# get the MAE value for the fitted model in the test set
+MAE(dataMoto$Bonus, gamma_pred)
+
+# Q: 10
