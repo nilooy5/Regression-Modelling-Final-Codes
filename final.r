@@ -79,14 +79,12 @@ predict(logit_fit2, newdata = data.frame(age = 53, mass = 30.5, pressure = 70), 
 data("iris")
 library(caret)
 df <- iris[21:150,]
+scaled_data <- scale(df[,1:4])
+scaled_data <- as.data.frame(scaled_data)
+scaled_data$Species <- df$Species
 
-iris_model <- train(Species ~.,
-                    data = df,
-                    method = "rpart",
-                    # trControl = trainControl("cv", number = 10),
-                    preProcess = c("scale")
-)
+iris_model <- rpart(Species ~ ., data = scaled_data, method = "class")
 iris_model
 library(rattle)
 fancyRpartPlot(iris_model$finalModel)
-rpart.plot(iris_model$finalModel)
+rpart.plot(iris_model)
