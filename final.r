@@ -86,5 +86,4 @@ scaled_data$Species <- df$Species
 iris_model <- rpart(Species ~ ., data = scaled_data, method = "class")
 iris_model
 library(rattle)
-fancyRpartPlot(iris_model$finalModel)
 rpart.plot(iris_model)
